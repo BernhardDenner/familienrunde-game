@@ -1,5 +1,5 @@
 import { randomBytes } from 'node:crypto';
-import { WHO_WOULD, HUMAN_OR_MACHINE, pick } from './questions.js';
+import { WHO_WOULD, HUMAN_OR_MACHINE, WHO_WOULD_LOCAL, HUMAN_OR_MACHINE_LOCAL, pickMixed } from './questions.js';
 
 export const DEFAULT_CONFIG = {
   whoRounds: 3,
@@ -169,8 +169,10 @@ export class Game {
     if (this.activePlayers().length < this.config.minPlayers) {
       return { ok: false, error: `Mindestens ${this.config.minPlayers} Spieler nötig.` };
     }
-    this.whoQuestions = pick(WHO_WOULD, this.config.whoRounds, this.usedQuestions);
-    this.momQuestions = pick(HUMAN_OR_MACHINE, this.config.momRounds, this.usedQuestions);
+    // Jede Partie hat garantiert regionale Fragen (Weinviertel, Patzmannsdorf, Patzenthal)
+    const whoLocal = Math.ceil(this.config.whoRounds / 2);
+    this.whoQuestions = pickMixed(WHO_WOULD_LOCAL, WHO_WOULD, this.config.whoRounds, whoLocal, this.usedQuestions);
+    this.momQuestions = pickMixed(HUMAN_OR_MACHINE_LOCAL, HUMAN_OR_MACHINE, this.config.momRounds, 1, this.usedQuestions);
     [...this.whoQuestions, ...this.momQuestions].forEach((q) => this.usedQuestions.add(q));
     this.setPhase('intro_who', this.config.introMs);
     return { ok: true };
@@ -300,7 +302,7 @@ export class Game {
       ? Promise.resolve(this.generateAnswer(question, this.styleExamples)).catch(() => null)
       : Promise.resolve(null);
     mom.aiPromise = gen.then((res) => {
-      mom.ai = res && res.text ? res : { text: 'hauptsache es gibt danach pizza', source: 'fallback' };
+      mom.ai = res && res.text ? res : { text: 'hauptsach nachher gibts a achterl', source: 'fallback' };
       return mom.ai;
     });
     this.setPhase('mom_write', this.config.momWriteMs);
@@ -328,7 +330,7 @@ export class Game {
       await Promise.race([mom.aiPromise, new Promise((r) => setTimeout(r, this.config.aiGraceMs))]);
     }
     if (this.mom !== mom || this.phase !== 'mom_write') return; // inzwischen neu gestartet
-    if (!mom.ai) mom.ai = { text: 'hauptsache es gibt danach pizza', source: 'fallback' };
+    if (!mom.ai) mom.ai = { text: 'hauptsach nachher gibts a achterl', source: 'fallback' };
     const entries = [...mom.answers.entries()].map(([authorId, text]) => ({ id: shortId(), authorId, text }));
     entries.push({ id: shortId(), authorId: AI_ID, text: mom.ai.text });
     mom.entries = shuffle(entries);

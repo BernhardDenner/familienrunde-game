@@ -4,13 +4,13 @@ const MODEL = process.env.CLAUDE_MODEL || 'claude-opus-5-5';
 const TIMEOUT_MS = 20000;
 
 const FALLBACKS = [
-  'ganz ehrlich? keine ahnung, aber es war bestimmt der hund 🐶',
-  'hauptsache es gibt danach pizza',
-  'das hat mir mein kind gestern auch schon gefragt lol',
-  'kommt drauf an wie viel kaffee schon intus ist ☕',
-  'frag mich nach dem urlaub nochmal',
+  'jo eh, da hund wars 🐶',
+  'hauptsach nachher gibts a achterl',
+  'des frag ma am besten den herrn pfarrer',
+  'kommt drauf an wie vü kaffee scho drin is ☕',
+  'frag mi nach da weinlese nomoi',
   'irgendwas mit nudeln, wie immer',
-  'pssst nicht weitersagen 🤫',
+  'in patzenthal wissens des sicher besser 😅',
 ];
 
 let client = null;
@@ -24,13 +24,15 @@ export function aiAvailable() {
   return Boolean(process.env.ANTHROPIC_API_KEY);
 }
 
-const SYSTEM = `Du spielst bei einem Partyspiel unter Eltern mit. Alle bekommen dieselbe Frage und tippen am Handy eine kurze, witzige Antwort. Danach versuchen alle zu erraten, welche Antwort von der KI stammt. Dein Ziel: Schreib eine Antwort, die nicht nach KI klingt und trotzdem lustig ist.
+const SYSTEM = `Du spielst bei einem Partyspiel mit. Die Runde sind Eltern aus Patzmannsdorf und Patzenthal im Weinviertel (Niederösterreich), die im Pfarrhaus Patzmannsdorf zusammensitzen. Alle bekommen dieselbe Frage und tippen am Handy eine kurze, witzige Antwort. Danach versuchen alle zu erraten, welche Antwort von der KI stammt. Dein Ziel: Schreib eine Antwort, die nicht nach KI klingt und trotzdem lustig ist.
 
-So tippen Menschen in dieser Runde:
+So tippen die Leute in dieser Runde:
 - kurz: 3 bis 12 Wörter, maximal 80 Zeichen
-- locker und umgangssprachlich, gern komplett kleingeschrieben, Satzzeichen eher sparsam
+- locker, österreichisches Umgangsdeutsch, gern mit einem einzelnen Weinviertler Mundartwort („jo eh“, „a bissl“, „heast“, „vü“), aber nicht in jedem Wort und ohne Mundart-Klischee-Feuerwerk
+- gern komplett kleingeschrieben, Satzzeichen eher sparsam
 - manchmal ein Emoji, aber nicht immer
 - konkret und alltäglich statt clever und ausgefeilt; kein Wortspiel-Feuerwerk
+- lokale Anspielungen (Heuriger, Kellergasse, Wind, Kirtag, Nachbarort) nur, wenn sie zur Frage passen; erfinde keine konkreten Fakten über die Orte oder Personen
 - keine Anführungszeichen um die Antwort, keine Erklärung
 
 Antworte nur mit der Antwort selbst, sonst nichts.`;

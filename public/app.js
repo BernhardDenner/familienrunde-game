@@ -15,6 +15,36 @@
     store.set('id', playerId);
   }
 
+
+  // Weinviertel-Silhouette: Windräder, Presshaus in der Kellergasse, Kirchturm, Weingärten
+  const LANDSCAPE = `
+    <svg class="landscape" viewBox="0 0 400 130" role="img" aria-label="Weinviertler Landschaft mit Windrädern, Kellergasse, Kirche und Weingärten">
+      <circle cx="338" cy="34" r="15" fill="#ffcc33" opacity=".9"/>
+      <g stroke="#fff" stroke-opacity=".75" stroke-width="2" fill="#fff" fill-opacity=".8">
+        <line x1="52" y1="92" x2="52" y2="28"/>
+        <g class="blades"><path d="M52 28 L50 6 L54 6 Z M52 28 L71 39 L69 42 Z M52 28 L33 39 L35 42 Z" stroke="none"/></g>
+        <line x1="96" y1="90" x2="96" y2="44"/>
+        <g class="blades slow"><path d="M96 44 L94.5 28 L97.5 28 Z M96 44 L110 52 L108.5 54.5 Z M96 44 L82 52 L83.5 54.5 Z" stroke="none"/></g>
+      </g>
+      <path d="M0 96 Q90 72 190 88 T400 80 V130 H0Z" fill="#fff" fill-opacity=".16"/>
+      <g fill="#fff" fill-opacity=".4">
+        <rect x="243" y="52" width="15" height="40"/><path d="M241 53 L250.5 30 L260 53 Z"/>
+        <rect x="258" y="70" width="38" height="22"/><path d="M256 71 L277 58 L298 71 Z"/>
+        <rect x="249.5" y="22" width="2" height="9"/><rect x="247" y="25" width="7" height="2"/>
+      </g>
+      <g fill="#fff" fill-opacity=".45">
+        <rect x="142" y="80" width="30" height="16"/><path d="M139 81 L157 68 L175 81 Z"/>
+      </g>
+      <path d="M152 96 V88 a5 5 0 0 1 10 0 V96 Z" fill="#000" fill-opacity=".35"/>
+      <path d="M0 112 Q120 92 240 106 T400 100 V130 H0Z" fill="#fff" fill-opacity=".26"/>
+      <g stroke="#1f4a2f" stroke-opacity=".55" stroke-width="3" stroke-dasharray="2 7" fill="none">
+        <path d="M0 118 Q120 98 240 112 T400 106"/>
+        <path d="M0 124 Q120 104 240 118 T400 112"/>
+        <path d="M0 130 Q120 110 240 124 T400 118"/>
+      </g>
+    </svg>`;
+  const PLACE = '<p class="place">Pfarrhaus Patzmannsdorf · mit Patzenthal · Weinviertel</p>';
+
   const $ = (sel) => document.querySelector(sel);
   const app = $('#app');
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -86,10 +116,12 @@
     const name = store.get('name') || '';
     app.innerHTML = `
       <h1 style="margin-top:18px">🧑 Mensch<br>oder<br>Maschine? 🤖</h1>
-      <p class="center white" style="margin-top:-4px">Das Partyspiel, bei dem eine echte KI mitspielt.</p>
+      <p class="center white" style="margin-top:-4px">Das Partyspiel der Familienrunde, bei dem eine echte KI mitspielt.</p>
+      ${LANDSCAPE}
+      ${PLACE}
       <div class="card stack">
         <label for="name"><b>Dein Name</b></label>
-        <input id="name" type="text" maxlength="16" autocomplete="nickname" placeholder="z.&nbsp;B. Papa Bernd" value="${esc(name)}">
+        <input id="name" type="text" maxlength="16" autocomplete="nickname" placeholder="z.&nbsp;B. Da Poidl" value="${esc(name)}">
         <div><b>Dein Tier</b></div>
         <div class="avatars">${AVATARS.map((a) => `<button type="button" data-av="${a}" class="${a === homeAvatar ? 'sel' : ''}">${a}</button>`).join('')}</div>
       </div>
@@ -178,6 +210,7 @@
     $('#hostbar').hidden = !(s.isHost && timed);
     $('#host-next').textContent = s.phase.endsWith('_result') || s.phase.startsWith('intro') ? '⏭ Weiter' : '⏭ Zeit beenden';
 
+    if (!prevPhase) window.scrollTo(0, 0); // von der Startseite kommend
     if (prevPhase && prevPhase !== s.phase) {
       buzz(s.phase.endsWith('_result') ? [40, 60, 40] : 30);
       if (s.phase === 'mom_write') { editing = false; draft = ''; }
@@ -217,8 +250,9 @@
     const url = joinUrl(s.code);
     const enough = s.players.filter((p) => p.connected).length >= s.minPlayers;
     return `
+      ${LANDSCAPE}
       <div class="card center">
-        <div class="muted">Spiel-Code</div>
+        <div class="muted">Spiel-Code · Familienrunde Patzmannsdorf</div>
         <div class="roomcode">${esc(s.code)}</div>
         <img class="qr" src="/qr.svg?url=${encodeURIComponent(url)}" alt="QR-Code zum Beitreten">
         <div class="small muted">Scannen oder auf <b>${esc(location.host)}</b> den Code eingeben</div>
@@ -298,7 +332,7 @@
       <h1>Teil 2<br>Mensch oder Maschine?</h1>
       <div class="card stack">
         <p><b>1.</b> Alle schreiben eine kurze, witzige Antwort auf eine Frage.</p>
-        <p><b>2.</b> Eine echte KI schreibt heimlich <b>auch eine Antwort</b> und versucht, wie ein Mensch zu klingen.</p>
+        <p><b>2.</b> Eine echte KI schreibt heimlich <b>auch eine Antwort</b> und versucht, wie ein Mensch aus dem Weinviertel zu klingen. Ob sie Patzmannsdorf und Patzenthal täuschen kann? 😏</p>
         <p><b>3.</b> Findet die KI-Antwort 🤖 und wählt die lustigste 😂.</p>
         <p class="muted small">KI erkannt: +100 · pro Lacher: +50 · Hält dich jemand für die KI? +50 pro Stimme 😏</p>
       </div>
@@ -333,7 +367,7 @@
       ${tag(s, 'Mensch oder Maschine')}
       <div class="question">${esc(s.question)}</div>
       <div class="card stack">
-        <textarea id="answer" maxlength="${s.maxAnswerLength}" placeholder="Deine Antwort … (kurz & lustig)" enterkeyhint="send"></textarea>
+        <textarea id="answer" maxlength="${s.maxAnswerLength}" placeholder="Deine Antwort … (kurz & lustig, gern a bissl Mundart)" enterkeyhint="send"></textarea>
         <div class="row"><span class="grow muted small" id="chars"></span><button id="send" class="btn small">Abschicken ✈️</button></div>
         <p class="muted small">Tipp: Schreib so, dass die anderen denken, <b>du</b> wärst die KI 😉</p>
       </div>
@@ -370,7 +404,7 @@
     const fooled = r.voters - r.detected;
     let verdict;
     if (r.voters === 0) verdict = 'Niemand hat getippt 🙈';
-    else if (r.detected === 0) verdict = 'Niemand hat die KI erkannt! 😱';
+    else if (r.detected === 0) verdict = 'Weder Patzmannsdorf noch Patzenthal hat die KI erkannt! 😱';
     else if (fooled === 0) verdict = 'Alle haben die KI entlarvt! 🕵️';
     else verdict = `${r.detected} von ${r.voters} haben die KI erkannt`;
     return `
@@ -410,6 +444,7 @@
     const award = (ico, title, a, text) => a ? `<div class="card award"><div class="ico">${ico}</div><div><div class="t">${title}</div><div>${a.names.map(esc).join(', ')} ${text(a.count)}</div></div></div>` : '';
     return `
       <h1>🏆 Endstand</h1>
+      ${PLACE}
       <div class="podium">
         ${order.map((p, i) => p ? `<div class="p ${cls[i]}"><div class="av">${p.avatar}</div><div class="nm">${esc(p.name)}</div><div class="blk">${p.score}</div></div>` : '<div class="p"></div>').join('')}
       </div>
@@ -419,12 +454,12 @@
       <div class="reveal">
         <div class="big-emoji" style="margin:0">🤖</div>
         <div class="ai-text">Die KI wurde ${sum.ai.detected} von ${sum.ai.votes} Mal erkannt</div>
-        <div>${sum.ai.votes && sum.ai.detected / sum.ai.votes < 0.5 ? 'Die Maschine hat die meisten von euch reingelegt …' : 'Ihr seid der KI noch einen Schritt voraus!'}</div>
+        <div>${sum.ai.votes && sum.ai.detected / sum.ai.votes < 0.5 ? 'Die Maschine hat die meisten von euch ordentlich eing\'legt …' : 'Ihr seid der KI noch einen Schritt voraus!'}</div>
         ${sum.ai.funnyVotes ? `<div class="small" style="margin-top:6px">Und sie bekam ${sum.ai.funnyVotes} Lacher-Stimme${sum.ai.funnyVotes > 1 ? 'n' : ''} 😅</div>` : ''}
       </div>
-      ${award('😂', 'Witzbold des Abends', sum.comedian, (n) => `– ${n} Lacher-Stimmen`)}
-      ${award('🤖', 'Heimlicher Roboter', sum.robot, (n) => `– ${n}× für die KI gehalten`)}
-      ${award('🕵️', 'KI-Detektiv', sum.detective, (n) => `– KI ${n}× entlarvt`)}
+      ${award('😂', 'Kellergassen-Kabarettist:in', sum.comedian, (n) => `– ${n} Lacher-Stimmen`)}
+      ${award('🤖', 'Heimlicher Roboter aus dem Weinviertel', sum.robot, (n) => `– ${n}× für die KI gehalten`)}
+      ${award('🕵️', 'KI-Gendarm des Abends', sum.detective, (n) => `– KI ${n}× entlarvt`)}
       <div class="card">
         <h2>Die Antworten der KI</h2>
         ${sum.ai.answers.map((a) => `<p><span class="muted small">${esc(a.question)}</span><br><b>„${esc(a.text)}“</b></p>`).join('')}
@@ -433,7 +468,8 @@
         <h2>Wer würde eher …?</h2>
         ${sum.who.map((w) => `<p><span class="muted small">${esc(w.question)}</span><br>👑 <b>${w.winners.length ? w.winners.map(esc).join(', ') : '–'}</b></p>`).join('')}
       </div>
-      ${s.isHost ? '<button id="restart" class="btn">🔁 Nochmal spielen</button>' : '<p class="center white">Danke fürs Mitspielen! 💜</p>'}
+      ${s.isHost ? '<button id="restart" class="btn">🔁 Nochmal spielen</button>' : '<p class="center white">Danke fürs Mitspielen – no an schönen Abend im Pfarrhaus! 🍇</p>'}
+      ${LANDSCAPE}
       <p class="center"><button id="leave" class="linkbtn">Spiel verlassen</button></p>
     `;
   }
@@ -443,7 +479,7 @@
     $('#start')?.addEventListener('click', () => emit('start'));
     $('#restart')?.addEventListener('click', () => emit('restart'));
     $('#share')?.addEventListener('click', () => {
-      navigator.share({ title: 'Mensch oder Maschine?', text: `Spiel mit! Code: ${s.code}`, url: joinUrl(s.code) }).catch(() => {});
+      navigator.share({ title: 'Mensch oder Maschine?', text: `Spiel mit bei der Familienrunde in Patzmannsdorf! Code: ${s.code}`, url: joinUrl(s.code) }).catch(() => {});
     });
     $('#leave')?.addEventListener('click', async () => {
       await emit('leave');

@@ -61,6 +61,41 @@ export const HUMAN_OR_MACHINE = [
   'Was steht auf dem Grabstein der letzten sauberen Küche?',
 ];
 
+// Regionale Fragen: Weinviertel, Patzmannsdorf & Patzenthal
+export const WHO_WOULD_LOCAL = [
+  'Wer würde am ehesten in der Kellergasse den Heimweg nicht mehr finden?',
+  'Wer würde am ehesten beim Heurigen „nur auf ein Achterl“ bleiben – bis zur Sperrstunde?',
+  'Wer würde am ehesten beim Kirtag als Letzte/r heimgehen?',
+  'Wer würde am ehesten mit dem Traktor zum Elternabend fahren?',
+  'Wer würde am ehesten behaupten, der eigene Veltliner sei der beste im ganzen Weinviertel?',
+  'Wer würde am ehesten beim Feuerwehrfest am Grillstand hängen bleiben?',
+  'Wer würde am ehesten bei der Weinlese mehr Trauben essen als in den Kübel werfen?',
+  'Wer würde am ehesten zwischen Patzmannsdorf und Patzenthal eine Radl-Abkürzung suchen – und sich verfahren?',
+  'Wer würde am ehesten beim Pfarrkaffee das letzte Stück Kuchen nehmen?',
+  'Wer würde am ehesten einem Weinviertler Windrad einen Namen geben?',
+  'Wer würde am ehesten in Patzenthal jemanden kennen, der jemanden kennt, der alles weiß?',
+  'Wer würde am ehesten die Sonntagspredigt auswendig mitsprechen können?',
+  'Wer würde am ehesten einer KI eine Kellergassen-Führung geben?',
+  'Wer würde am ehesten im Presshaus verzweifelt Handyempfang suchen?',
+  'Wer würde am ehesten behaupten, in Patzmannsdorf weht der Wind ein bisschen freundlicher als in Patzenthal?',
+  'Wer würde am ehesten beim Dorffest das Mikrofon nicht mehr hergeben?',
+];
+
+export const HUMAN_OR_MACHINE_LOCAL = [
+  'Der wahre Unterschied zwischen Patzmannsdorf und Patzenthal:',
+  'Der neue Werbeslogan fürs Weinviertel:',
+  'Was flüstern die Weinfässer in der Kellergasse in der Nacht?',
+  'Was würde ein Roboter bei seinem ersten Heurigenbesuch sagen?',
+  'Die wichtigste Regel im Pfarrhaus:',
+  'Warum fährt man eigentlich von Patzenthal nach Patzmannsdorf?',
+  'Patzmannsdorf gegen Patzenthal im Fußball – wer gewinnt und warum?',
+  'Worüber reden die Windräder im Weinviertel den ganzen Tag?',
+  'Die beste Ausrede, warum man nach der Kellergasse zu Fuß heimgeht:',
+  'Der Name für den ersten Weinviertler Roboter-Winzer:',
+  'Was ist im Weinviertel noch flacher als die Landschaft?',
+  'Was würde Oma sagen, wenn eine KI den Kirtag organisiert?',
+];
+
 export function pick(pool, n, exclude = new Set()) {
   const avail = pool.filter((q) => !exclude.has(q));
   const src = avail.length >= n ? avail : [...pool];
@@ -69,4 +104,11 @@ export function pick(pool, n, exclude = new Set()) {
     out.push(src.splice(Math.floor(Math.random() * src.length), 1)[0]);
   }
   return out;
+}
+
+/** Wählt n Fragen, davon mindestens `localCount` regionale, in zufälliger Reihenfolge. */
+export function pickMixed(local, general, n, localCount, exclude = new Set()) {
+  const loc = pick(local, Math.min(localCount, n), exclude);
+  const rest = pick([...local, ...general].filter((q) => !loc.includes(q)), n - loc.length, exclude);
+  return pick([...loc, ...rest], n);
 }

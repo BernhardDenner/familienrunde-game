@@ -10,8 +10,8 @@ const N = Number(process.argv[2] || 6);
 let code = (process.argv[3] || '').toUpperCase();
 const hostMode = !code;
 
-const NAMES = ['Oma Inge', 'Onkel Kurt', 'Tante Gabi', 'Papa Jo', 'Mama Lu', 'Tim', 'Lena', 'Opa Fritz', 'Kai', 'Mia', 'Ben', 'Nora', 'Paul', 'Emma', 'Finn', 'Lea', 'Max', 'Ida', 'Tom', 'Zoe'];
-const ANSWERS = ['ich sag nur: kaffee', 'warum ist das brot schon wieder alle', 'frag papa', 'das war bestimmt der hund', 'mehr schlaf bitte', 'pizza löst alles', 'wo ist die fernbedienung', 'haben wir noch nutella?', 'ich hab nix gemacht!', 'lego. überall lego.'];
+const NAMES = ['Resi-Tant', 'Onkel Ferdl', 'Poidl', 'Mitzi', 'Gusti', 'Hansi', 'Franzl', 'Opa Sepp', 'Vroni', 'Leni', 'Wastl', 'Burgi', 'Hias', 'Loisi', 'Fritzi', 'Kathi', 'Toni', 'Rosi', 'Schorschi', 'Lisi'];
+const ANSWERS = ['jo eh, wie immer', 'heast, frag ned so vü', 'des woar sicher da Wind', 'zerst a Achterl, dann red ma weida', 'in Patzenthal is des eh anders', 'mehr schlaf bitte', 'wo is die fernbedienung', 'i hob nix gmacht!', 'lego. überall lego.', 'frag an Herrn Pfarrer'];
 const rnd = (a) => a[Math.floor(Math.random() * a.length)];
 const delay = (min, max) => new Promise((r) => setTimeout(r, min + Math.random() * (max - min)));
 

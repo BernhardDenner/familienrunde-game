@@ -1,6 +1,6 @@
 :root {
-  --bg1: #4b2bb8;
-  --bg2: #c2347a;
+  --bg1: #6b1f3e; /* Zweigelt */
+  --bg2: #2f6b45; /* Weingarten */
   --card: #ffffff;
   --ink: #1d1838;
   --muted: #6b6889;
@@ -75,7 +75,7 @@ p { line-height: 1.45; }
 }
 .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,.18); }
 .btn:disabled { opacity: .5; }
-.btn.secondary { background: #ece9ff; }
+.btn.secondary { background: #f3ece6; }
 .btn.ghost { background: rgba(255,255,255,.92); }
 .btn.small { padding: 8px 12px; font-size: .95rem; width: auto; display: inline-block; }
 .linkbtn { background: none; border: 0; color: #fff; text-decoration: underline; font-size: .95rem; padding: 8px; cursor: pointer; }
@@ -85,10 +85,10 @@ input[type=text], textarea {
   font: inherit;
   font-size: 1.15rem;
   padding: 13px 14px;
-  border: 2px solid #ddd8f5;
+  border: 2px solid #e6d9d0;
   border-radius: 12px;
   outline: none;
-  background: #faf9ff;
+  background: #fdfaf6;
   color: var(--ink);
 }
 input[type=text]:focus, textarea:focus { border-color: var(--bg1); background: #fff; }
@@ -98,16 +98,16 @@ input.code { text-transform: uppercase; letter-spacing: .3em; text-align: center
 .avatars { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; }
 .avatars button {
   font-size: 1.5rem; aspect-ratio: 1; border-radius: 10px; border: 2px solid transparent;
-  background: #f2f0ff; cursor: pointer; padding: 0;
+  background: #f5efe9; cursor: pointer; padding: 0;
 }
-.avatars button.sel { border-color: var(--bg1); background: #e0d9ff; }
+.avatars button.sel { border-color: var(--bg1); background: #f2dfe6; }
 
 /* Kopfzeile & Timer */
 header#topbar {
   position: sticky; top: env(safe-area-inset-top, 0); z-index: 5;
   display: flex; justify-content: space-between; align-items: center;
   padding: 10px 16px; color: #fff; font-weight: 700;
-  background: rgba(30, 15, 80, .35); backdrop-filter: blur(6px);
+  background: rgba(40, 10, 25, .35); backdrop-filter: blur(6px);
 }
 header .me { display: flex; gap: 8px; align-items: center; font-size: 1.05rem; }
 header .me span:first-child { font-size: 1.4rem; }
@@ -130,7 +130,7 @@ footer#hostbar .btn { max-width: 560px; }
 .players { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip {
   display: inline-flex; align-items: center; gap: 6px;
-  background: #f2f0ff; border-radius: 999px; padding: 6px 12px; font-weight: 600;
+  background: #f5efe9; border-radius: 999px; padding: 6px 12px; font-weight: 600;
   animation: pop .3s ease-out;
 }
 .chip.off { opacity: .45; }
@@ -155,7 +155,7 @@ footer#hostbar .btn { max-width: 560px; }
 }
 .pbtn .av { font-size: 2.2rem; display: block; }
 .pbtn .nm { font-weight: 700; font-size: .95rem; word-break: break-word; }
-.pbtn.sel { border-color: var(--accent); background: #fff8dc; transform: scale(1.04); }
+.pbtn.sel { border-color: var(--accent); background: #fff6d6; transform: scale(1.04); }
 
 /* Ergebnisbalken */
 .bar { margin: 8px 0; }
@@ -177,7 +177,7 @@ footer#hostbar .btn { max-width: 560px; }
 .entry.mine { opacity: .6; }
 .entry .acts { display: flex; gap: 8px; }
 .entry .acts button {
-  flex: 1; border: 2px solid #e6e3f7; background: #f7f6ff; border-radius: 12px; padding: 10px 6px;
+  flex: 1; border: 2px solid #eadfd6; background: #fbf7f2; border-radius: 12px; padding: 10px 6px;
   font-size: 1rem; font-weight: 700; cursor: pointer; color: var(--ink);
 }
 .entry .acts button.ai.sel { background: var(--ai); border-color: var(--ai); color: #fff; }
@@ -186,7 +186,7 @@ footer#hostbar .btn { max-width: 560px; }
 .entry.sel-funny { border-color: var(--funny); }
 .entry.sel-ai.sel-funny { border-color: var(--ai) var(--funny) var(--funny) var(--ai); }
 
-.entry.reveal-ai { border-color: var(--ai); background: #e8fbfd; }
+.entry.reveal-ai { border-color: var(--ai); background: #eef7f0; }
 .entry .who { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: .95rem; }
 .entry .who .author { font-weight: 700; color: var(--ink); }
 .badges { display: flex; gap: 10px; font-weight: 700; }
@@ -196,7 +196,7 @@ footer#hostbar .btn { max-width: 560px; }
 .status span.ok { background: var(--ok); color: #fff; }
 
 .reveal {
-  text-align: center; background: linear-gradient(135deg, #18b6c9, #4b2bb8); color: #fff;
+  text-align: center; background: linear-gradient(135deg, #2f6b45, #6b1f3e); color: #fff;
   border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); margin-bottom: 14px;
   animation: pop .5s ease-out;
 }
@@ -242,3 +242,10 @@ footer#hostbar .btn { max-width: 560px; }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* Weinviertel-Landschaft */
+.landscape { display: block; width: 100%; height: auto; margin: 4px 0 10px; }
+.landscape .blades { transform-box: fill-box; transform-origin: center; animation: spin 6s linear infinite; }
+.landscape .blades.slow { animation-duration: 9s; }
+.place { text-align: center; color: #fff; font-weight: 700; letter-spacing: .04em; font-size: .9rem; opacity: .95; margin: 0 0 6px; }
+@keyframes spin { to { transform: rotate(360deg); } }

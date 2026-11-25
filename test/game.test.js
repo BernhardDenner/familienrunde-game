@@ -167,3 +167,17 @@ test('Ansicht verrät keine Autoren während der Abstimmung', async (t) => {
   }
   assert.equal(v.entries.filter((e) => e.mine).length, 1);
 });
+
+test('Jede Partie enthält regionale Fragen (Weinviertel, Patzmannsdorf, Patzenthal)', async (t) => {
+  const { WHO_WOULD_LOCAL, HUMAN_OR_MACHINE_LOCAL } = await import('../server/questions.js');
+  for (let i = 0; i < 50; i++) {
+    const g = new Game('L', { config: { introMs: LONG } });
+    ['a', 'b', 'c'].forEach((id) => g.addPlayer(id, id.toUpperCase(), '🦊'));
+    g.start('a');
+    assert.equal(g.whoQuestions.length, 3);
+    assert.equal(new Set(g.whoQuestions).size, 3);
+    assert.ok(g.whoQuestions.filter((q) => WHO_WOULD_LOCAL.includes(q)).length >= 2);
+    assert.ok(g.momQuestions.some((q) => HUMAN_OR_MACHINE_LOCAL.includes(q)));
+    g.dispose();
+  }
+});

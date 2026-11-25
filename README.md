@@ -1,6 +1,6 @@
 # 🧑 Mensch oder Maschine? 🤖
 
-Ein Handy-Partyspiel für 5–20 Personen (ca. 6–10 Minuten), bei dem eine echte KI (Claude) mitspielt.
+Ein Handy-Partyspiel für die **Familienrunde im Pfarrhaus Patzmannsdorf** (mit Patzenthal, Weinviertel) für 5–20 Personen (ca. 6–10 Minuten), bei dem eine echte KI (Claude) mitspielt.
 Keine App und kein Login: Code eingeben oder QR-Code scannen, dann kann es losgehen.
 
 ## Ablauf
@@ -11,7 +11,7 @@ Keine App und kein Login: Code eingeben oder QR-Code scannen, dann kann es losge
    - Alle schreiben eine kurze, witzige Antwort (120 s). **Claude schreibt heimlich mit** und versucht, wie ein Mensch zu klingen.
    - Alle Antworten erscheinen anonym. Jeder wählt 🤖 „Das war die KI“ und 😂 „Am lustigsten“.
    - Auflösung: KI erkannt = +100, pro Lacher-Stimme +50, pro Person, die dich für die KI hielt, +50.
-4. **Finale**: Podium, Witzbold, heimlicher Roboter, KI-Detektiv sowie alle Antworten der KI.
+4. **Finale**: Podium, Kellergassen-Kabarettist:in, heimlicher Roboter aus dem Weinviertel, KI-Gendarm sowie alle Antworten der KI.
 
 Die Timer laufen automatisch. Der Spielleiter (⭐) kann mit „Weiter“ früher umschalten. Haben alle abgestimmt, geht es sofort weiter.
 Wer das Handy sperrt oder die Seite neu lädt, landet automatisch wieder im Spiel.
@@ -59,5 +59,5 @@ FAST_TIMERS=1 npm start               # Server mit sehr kurzen Timern (für Test
 - Node.js, Express, Socket.IO (Echtzeit); Frontend in Vanilla HTML/CSS/JS ohne Build-Schritt
 - `server/game.js`: Spiellogik als Zustandsautomat (getestet in `test/game.test.js`)
 - `server/ai.js`: Claude-Anbindung (`claude-opus-5-5`, niedriger Aufwand, serverseitiger Fallback bei Ablehnung, Ersatzantwort bei Fehlern)
-- `server/questions.js`: Fragenpools zum Anpassen
+- `server/questions.js`: Fragenpools zum Anpassen. Die `*_LOCAL`-Listen enthalten die Weinviertel-, Patzmannsdorf- und Patzenthal-Fragen. Jede Partie bekommt garantiert 2 regionale „Wer würde eher?“-Fragen und 1 regionale KI-Frage.
 - Spielstände liegen nur im Arbeitsspeicher, es gibt keine Datenbank.
