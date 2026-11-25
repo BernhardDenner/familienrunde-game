@@ -16,34 +16,14 @@
   }
 
 
-  // Weinviertel-Silhouette: Windräder, Presshaus in der Kellergasse, Kirchturm, Weingärten
-  const LANDSCAPE = `
-    <svg class="landscape" viewBox="0 0 400 130" role="img" aria-label="Weinviertler Landschaft mit Windrädern, Kellergasse, Kirche und Weingärten">
-      <circle cx="338" cy="34" r="15" fill="#ffcc33" opacity=".9"/>
-      <g stroke="#fff" stroke-opacity=".75" stroke-width="2" fill="#fff" fill-opacity=".8">
-        <line x1="52" y1="92" x2="52" y2="28"/>
-        <g class="blades"><path d="M52 28 L50 6 L54 6 Z M52 28 L71 39 L69 42 Z M52 28 L33 39 L35 42 Z" stroke="none"/></g>
-        <line x1="96" y1="90" x2="96" y2="44"/>
-        <g class="blades slow"><path d="M96 44 L94.5 28 L97.5 28 Z M96 44 L110 52 L108.5 54.5 Z M96 44 L82 52 L83.5 54.5 Z" stroke="none"/></g>
-      </g>
-      <path d="M0 96 Q90 72 190 88 T400 80 V130 H0Z" fill="#fff" fill-opacity=".16"/>
-      <g fill="#fff" fill-opacity=".4">
-        <rect x="243" y="52" width="15" height="40"/><path d="M241 53 L250.5 30 L260 53 Z"/>
-        <rect x="258" y="70" width="38" height="22"/><path d="M256 71 L277 58 L298 71 Z"/>
-        <rect x="249.5" y="22" width="2" height="9"/><rect x="247" y="25" width="7" height="2"/>
-      </g>
-      <g fill="#fff" fill-opacity=".45">
-        <rect x="142" y="80" width="30" height="16"/><path d="M139 81 L157 68 L175 81 Z"/>
-      </g>
-      <path d="M152 96 V88 a5 5 0 0 1 10 0 V96 Z" fill="#000" fill-opacity=".35"/>
-      <path d="M0 112 Q120 92 240 106 T400 100 V130 H0Z" fill="#fff" fill-opacity=".26"/>
-      <g stroke="#1f4a2f" stroke-opacity=".55" stroke-width="3" stroke-dasharray="2 7" fill="none">
-        <path d="M0 118 Q120 98 240 112 T400 106"/>
-        <path d="M0 124 Q120 104 240 118 T400 112"/>
-        <path d="M0 130 Q120 110 240 124 T400 118"/>
-      </g>
-    </svg>`;
-  const PLACE = '<p class="place">Pfarrhaus Patzmannsdorf · mit Patzenthal · Weinviertel</p>';
+  const PLACE = '<p class="place">📍 Pfarrhaus Patzmannsdorf · mit Patzenthal · Weinviertel</p>';
+  const CREDIT = `<p class="credit">Hintergrundfotos (Wikimedia Commons):
+    <a href="https://commons.wikimedia.org/wiki/File:Patzmannsdorf_-_K%C3%BCrbisfeld_mit_Pfarrkirche_und_Raiffeisen-Silo_in_Stronsdorf.jpg" target="_blank" rel="noopener">Kürbisfeld mit Pfarrkirche Patzmannsdorf</a> – Haeferl, CC BY-SA 4.0 ·
+    <a href="https://commons.wikimedia.org/wiki/File:Kapelle_Patzenthal_umgeben_von_Naturdenkm%C3%A4lern.JPG" target="_blank" rel="noopener">Kapelle Patzenthal</a> – Herbert Nowak, CC BY-SA 3.0 AT</p>`;
+  // Teil 1 vor dem Pfarrkirchen-Feld in Patzmannsdorf, Teil 2 und Finale vor der Kapelle Patzenthal
+  const setBackground = (phase) => {
+    document.body.dataset.bg = /^(intro_mom|mom_|final)/.test(phase) ? 'patzenthal' : 'patzmannsdorf';
+  };
 
   const $ = (sel) => document.querySelector(sel);
   const app = $('#app');
@@ -108,6 +88,7 @@
   let onHome = false;
   function renderHome(errorMsg) {
     onHome = true;
+    setBackground('lobby');
     state = null;
     lastKey = null;
     $('#topbar').hidden = true;
@@ -117,7 +98,6 @@
     app.innerHTML = `
       <h1 style="margin-top:18px">🧑 Mensch<br>oder<br>Maschine? 🤖</h1>
       <p class="center white" style="margin-top:-4px">Das Partyspiel der Familienrunde, bei dem eine echte KI mitspielt.</p>
-      ${LANDSCAPE}
       ${PLACE}
       <div class="card stack">
         <label for="name"><b>Dein Name</b></label>
@@ -135,6 +115,7 @@
         <button id="create" class="btn secondary">Neues Spiel erstellen</button>
       </div>`}
       ${linkCode ? '<p class="center"><button id="showcreate" class="linkbtn">Stattdessen ein neues Spiel erstellen</button></p>' : ''}
+      ${CREDIT}
     `;
     if (errorMsg) toast(errorMsg);
     app.querySelectorAll('[data-av]').forEach((b) => b.addEventListener('click', () => {
@@ -187,6 +168,7 @@
     const prevPhase = state?.phase;
     onHome = false;
     state = s;
+    setBackground(s.phase);
     if (!s.me) { store.set('code', null); renderHome('Du bist nicht mehr im Spiel.'); return; }
 
     // Kopfzeile
@@ -250,7 +232,7 @@
     const url = joinUrl(s.code);
     const enough = s.players.filter((p) => p.connected).length >= s.minPlayers;
     return `
-      ${LANDSCAPE}
+      ${PLACE}
       <div class="card center">
         <div class="muted">Spiel-Code · Familienrunde Patzmannsdorf</div>
         <div class="roomcode">${esc(s.code)}</div>
@@ -469,8 +451,8 @@
         ${sum.who.map((w) => `<p><span class="muted small">${esc(w.question)}</span><br>👑 <b>${w.winners.length ? w.winners.map(esc).join(', ') : '–'}</b></p>`).join('')}
       </div>
       ${s.isHost ? '<button id="restart" class="btn">🔁 Nochmal spielen</button>' : '<p class="center white">Danke fürs Mitspielen – no an schönen Abend im Pfarrhaus! 🍇</p>'}
-      ${LANDSCAPE}
       <p class="center"><button id="leave" class="linkbtn">Spiel verlassen</button></p>
+      ${CREDIT}
     `;
   }
 

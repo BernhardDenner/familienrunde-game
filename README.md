@@ -61,3 +61,12 @@ FAST_TIMERS=1 npm start               # Server mit sehr kurzen Timern (für Test
 - `server/ai.js`: Claude-Anbindung (`claude-opus-5-5`, niedriger Aufwand, serverseitiger Fallback bei Ablehnung, Ersatzantwort bei Fehlern)
 - `server/questions.js`: Fragenpools zum Anpassen. Die `*_LOCAL`-Listen enthalten die Weinviertel-, Patzmannsdorf- und Patzenthal-Fragen. Jede Partie bekommt garantiert 2 regionale „Wer würde eher?“-Fragen und 1 regionale KI-Frage.
 - Spielstände liegen nur im Arbeitsspeicher, es gibt keine Datenbank.
+
+## Bildnachweis
+
+Hintergrundfotos von Wikimedia Commons (auch im Spiel auf der Startseite und im Finale genannt):
+
+- Teil 1 & Lobby: [Patzmannsdorf – Kürbisfeld mit Pfarrkirche](https://commons.wikimedia.org/wiki/File:Patzmannsdorf_-_K%C3%BCrbisfeld_mit_Pfarrkirche_und_Raiffeisen-Silo_in_Stronsdorf.jpg), Foto: Haeferl, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+- Teil 2 & Finale: [Kapelle Patzenthal umgeben von Naturdenkmälern](https://commons.wikimedia.org/wiki/File:Kapelle_Patzenthal_umgeben_von_Naturdenkm%C3%A4lern.JPG), Foto: Herbert Nowak, [CC BY-SA 3.0 AT](https://creativecommons.org/licenses/by-sa/3.0/at/)
+
+Für die Web-Ansicht wurden die Bilder verkleinert (`public/img/`). Eigene Fotos können einfach unter denselben Dateinamen abgelegt werden.

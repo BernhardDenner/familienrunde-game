@@ -20,8 +20,26 @@ html, body {
   min-height: 100%;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   color: var(--ink);
-  background: linear-gradient(160deg, var(--bg1), var(--bg2)) fixed;
-  background-color: var(--bg1);
+}
+html { background-color: var(--bg1); }
+
+/* Örtliches Landschaftsfoto als fester Hintergrund (Pseudo-Element, funktioniert auch auf iOS) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(170deg, rgba(70, 18, 40, .72) 0%, rgba(107, 31, 62, .35) 45%, rgba(30, 75, 45, .70) 100%),
+    url("img/patzmannsdorf.jpg") center 30% / cover no-repeat,
+    var(--bg1);
+  transition: opacity .6s;
+}
+body[data-bg="patzenthal"]::before {
+  background:
+    linear-gradient(170deg, rgba(70, 18, 40, .72) 0%, rgba(107, 31, 62, .35) 45%, rgba(30, 75, 45, .70) 100%),
+    url("img/patzenthal.jpg") 50% 40% / cover no-repeat,
+    var(--bg1);
 }
 
 body {
@@ -53,7 +71,7 @@ p { line-height: 1.45; }
 .muted { color: var(--muted); }
 .white { color: #fff; }
 .small { font-size: .9rem; }
-.big-emoji { font-size: 4.5rem; text-align: center; line-height: 1.1; margin: 8px 0; }
+.big-emoji { font-size: 4.5rem; text-align: center; line-height: 1.1; margin: 8px 0; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,.45); }
 .stack > * + * { margin-top: 10px; }
 .row { display: flex; gap: 10px; align-items: center; }
 .row > .grow { flex: 1; }
@@ -243,9 +261,8 @@ footer#hostbar .btn { max-width: 560px; }
   * { animation: none !important; transition: none !important; }
 }
 
-/* Weinviertel-Landschaft */
-.landscape { display: block; width: 100%; height: auto; margin: 4px 0 10px; }
-.landscape .blades { transform-box: fill-box; transform-origin: center; animation: spin 6s linear infinite; }
-.landscape .blades.slow { animation-duration: 9s; }
-.place { text-align: center; color: #fff; font-weight: 700; letter-spacing: .04em; font-size: .9rem; opacity: .95; margin: 0 0 6px; }
-@keyframes spin { to { transform: rotate(360deg); } }
+/* Ortsangabe & Bildnachweis */
+.place { text-align: center; color: #fff; font-weight: 700; letter-spacing: .04em; font-size: .9rem; margin: 0 0 12px; text-shadow: 0 1px 6px rgba(0,0,0,.6); }
+.credit { text-align: center; color: #fff; font-size: .72rem; opacity: .85; margin: 18px 0 0; text-shadow: 0 1px 4px rgba(0,0,0,.7); }
+.credit a { color: #fff; }
+h1, .white, .progress { text-shadow: 0 2px 8px rgba(0,0,0,.45); }
