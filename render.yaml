@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: mensch-oder-maschine
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: ANTHROPIC_API_KEY
+        sync: false # wird beim Anlegen im Render-Dashboard abgefragt
