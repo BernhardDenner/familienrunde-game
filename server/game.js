@@ -8,12 +8,12 @@ export const DEFAULT_CONFIG = {
   maxPlayers: 24,
   maxAnswerLength: 80,
   // Zeiten in Millisekunden
-  introMs: 8000,
-  whoVoteMs: 20000,
-  whoResultMs: 15000,
-  momWriteMs: 60000,
-  momVoteMs: 40000,
-  momResultMs: 25000,
+  introMs: 16000,
+  whoVoteMs: 40000,
+  whoResultMs: 30000,
+  momWriteMs: 120000,
+  momVoteMs: 80000,
+  momResultMs: 50000,
   aiGraceMs: 8000, // so lange wird nach dem Schreiben max. zusätzlich auf die KI gewartet
   hostTransferMs: 30000,
 };

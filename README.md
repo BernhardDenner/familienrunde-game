@@ -1,14 +1,14 @@
 # 🧑 Mensch oder Maschine? 🤖
 
-Ein Handy-Partyspiel für 5–20 Personen (ca. 5–6 Minuten), bei dem eine echte KI (Claude) mitspielt.
+Ein Handy-Partyspiel für 5–20 Personen (ca. 6–10 Minuten), bei dem eine echte KI (Claude) mitspielt.
 Keine App und kein Login: Code eingeben oder QR-Code scannen, dann kann es losgehen.
 
 ## Ablauf
 
 1. **Lobby**: Der Spielleiter erstellt ein Spiel und zeigt den QR-Code bzw. den 4-stelligen Code. Alle treten mit Namen und Tier bei.
-2. **Teil 1: „Wer würde am ehesten …?“** (3 Fragen à 20 s): Jeder tippt auf eine Person aus der Runde. Wer für die Mehrheits-Person gestimmt hat, bekommt +50 (Gedankenleser).
+2. **Teil 1: „Wer würde am ehesten …?“** (3 Fragen à 40 s): Jeder tippt auf eine Person aus der Runde. Wer für die Mehrheits-Person gestimmt hat, bekommt +50 (Gedankenleser).
 3. **Teil 2: „Mensch oder Maschine“** (2 Runden):
-   - Alle schreiben eine kurze, witzige Antwort (60 s). **Claude schreibt heimlich mit** und versucht, wie ein Mensch zu klingen.
+   - Alle schreiben eine kurze, witzige Antwort (120 s). **Claude schreibt heimlich mit** und versucht, wie ein Mensch zu klingen.
    - Alle Antworten erscheinen anonym. Jeder wählt 🤖 „Das war die KI“ und 😂 „Am lustigsten“.
    - Auflösung: KI erkannt = +100, pro Lacher-Stimme +50, pro Person, die dich für die KI hielt, +50.
 4. **Finale**: Podium, Witzbold, heimlicher Roboter, KI-Detektiv sowie alle Antworten der KI.
